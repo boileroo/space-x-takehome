@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CONSTANTS from "../../constants/Config";
 import LABEL from "../../constants/Labels";
 import { LaunchList } from "../LaunchList";
@@ -7,7 +7,13 @@ import { Select } from "../Select";
 import { useLaunchContext } from "../../contexts/LaunchContext";
 
 export const Body = () => {
-  const { filter, setSort, sort, items, years } = useLaunchContext();
+  const { data: launches, filter, setSort, sort } = useLaunchContext();
+  const [yearsRange, setYearsRange] = useState([]);
+
+  useEffect(() => {
+    let range = [...new Set(launches.map((launch) => launch.launch_year))];
+    setYearsRange(range);
+  }, [launches]);
 
   return (
     <div className="app__body">
@@ -25,7 +31,7 @@ export const Body = () => {
             classes="select"
             label={LABEL.FILTER_BY_YEAR}
             testId="filter-button-test"
-            years={years}
+            values={yearsRange}
           />
           <Button
             filter={filter}

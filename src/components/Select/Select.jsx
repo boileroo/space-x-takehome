@@ -2,11 +2,13 @@ import React from "react";
 import cx from "classnames";
 import { useLaunchContext } from "../../contexts/LaunchContext";
 
-export const Select = ({ label, classes, error, allowDisabledState }) => {
+export const Select = ({ label, classes, values, error = false, allowDisabledState = false }) => {
   const { setFilter, filter } = useLaunchContext();
+
   const selectClasses = cx(classes, {
     disabled: allowDisabledState ? error : "",
   });
+
   return (
     <select
       name={label}
@@ -16,7 +18,14 @@ export const Select = ({ label, classes, error, allowDisabledState }) => {
       }}
       value={filter}
     >
-      <option value="">{label}</option>
+      <option value="" key="no-filter">
+        No Filter
+      </option>
+      {values.map((v) => (
+        <option value={v.toString()} key={v}>
+          {v.toString()}
+        </option>
+      ))}
     </select>
   );
 };
