@@ -1,5 +1,5 @@
 import React from "react";
 
 export const LoadingPage = () => {
-  return <div className="loading_page">Loading!</div>;
+  return <div className="loading-page">Loading!</div>;
 };
