@@ -1,1 +1,0 @@
-export { GetLaunchesAPI } from "./GetLaunches";

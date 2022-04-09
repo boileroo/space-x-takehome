@@ -1,9 +1,14 @@
 import React from "react";
-import { GetLaunchesAPI } from "../../api/GetLaunches";
+
+import { useFetchData } from "../../api/useFetchData/useFetchData";
+
+import CONSTANTS from "../../constants/Config";
 
 export const launchContextDefaults = {
   listLaunches: Function,
-  items: [],
+  data: [],
+  isError: false,
+  isLoading: false,
   sort: false,
   setSort: Function,
   filter: "",
@@ -14,19 +19,21 @@ export const LaunchContext = React.createContext(launchContextDefaults);
 export const useLaunchContext = () => React.useContext(LaunchContext);
 
 export const LaunchProvider = ({ children }) => {
-  const [items, setItems] = React.useState([]);
   const [sort, setSort] = React.useState(false);
   const [filter, setFilter] = React.useState("");
+  const [{ data, isLoading, isError }, invokeFetch] = useFetchData(CONSTANTS.SPACE_X_API);
 
   return (
     <LaunchContext.Provider
       value={{
         listLaunches: React.useCallback(async () => {
           setFilter("");
-          const response = await GetLaunchesAPI();
-          setItems(response);
+          setSort(false);
+          await invokeFetch();
         }, []),
-        items,
+        data,
+        isLoading,
+        isError,
         sort,
         setSort,
         filter,
