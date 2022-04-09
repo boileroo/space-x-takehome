@@ -1,8 +1,11 @@
 import React from "react";
 import { LaunchItem } from "../LaunchItem";
+import { useLaunchContext } from "../../contexts/LaunchContext";
 
 // Component takes a raw list of data (launches), filters it by 'filter' and sorts it by 'sort'
-export const LaunchList = ({ launches, filter, sort }) => {
+export const LaunchList = () => {
+  const { data: launches, sort, filter } = useLaunchContext();
+
   let filteredLaunches = [...launches];
 
   if (filter !== "") {

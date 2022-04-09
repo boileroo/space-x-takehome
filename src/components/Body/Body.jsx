@@ -9,7 +9,7 @@ import { ErrorPage } from "../ErrorPage";
 import { LoadingPage } from "../LoadingPage";
 
 export const Body = () => {
-  const { data: launches, isError, isLoading, filter, setSort, sort } = useLaunchContext();
+  const { data: launches, isError, isLoading, setSort, sort } = useLaunchContext();
   const [yearsRange, setYearsRange] = useState([]);
 
   useEffect(() => {
@@ -42,13 +42,12 @@ export const Body = () => {
               values={yearsRange}
             />
             <Button
-              filter={filter}
               classes="button button--sort"
               onClick={() => setSort(!sort)}
               label={sort ? LABEL.ASC : LABEL.DESC}
             />
           </div>
-          <LaunchList launches={launches} filter={filter} sort={sort} />
+          <LaunchList />
         </div>
       )}
     </div>
