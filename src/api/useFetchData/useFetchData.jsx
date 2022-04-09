@@ -1,14 +1,17 @@
-// Change below function to API call
+import { useState } from "react";
+import axios from "axios";
+
 export const useFetchData = (url) => {
-  const [data, setData] = React.useState([]);
-  const [isError, setIsError] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [data, setData] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const invokeFetch = async () => {
     setIsError(false);
     setIsLoading(true);
     try {
-      const response = await fetch(url);
+      const response = await axios(url);
+      console.log(response);
       setData(response.data);
     } catch (error) {
       setIsError(true);
