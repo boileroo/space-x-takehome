@@ -40,7 +40,7 @@ export const Body = () => {
             label={sort ? LABEL.ASC : LABEL.DESC}
           />
         </div>
-        <LaunchList items={items} filter={filter} sort={sort} />
+        <LaunchList launches={launches} filter={filter} sort={sort} />
       </div>
     </div>
   );

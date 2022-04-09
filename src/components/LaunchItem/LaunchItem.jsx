@@ -1,8 +1,8 @@
 import React from "react";
 
-export const LaunchItem = ({ item, index }) => {
+export const LaunchItem = ({ launch, index }) => {
   //missing rocket name
-  const { flight_number, mission_name, launch_date_utc } = item;
+  const { flight_number, mission_name, launch_date_utc } = launch;
 
   return (
     <li key={index}>
