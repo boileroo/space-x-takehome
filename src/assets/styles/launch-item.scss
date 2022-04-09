@@ -1,0 +1,48 @@
+.launch-item {
+  display: flex;
+  flex-direction: row;
+  background-color: $white;
+  color: $font-color;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.25);
+  border: none;
+  border-radius: 10px;
+  align-items: center;
+  position: relative;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-family: $font-family;
+  transition: background-color $transition;
+
+  &:hover {
+    background-color: darken($white, 10%);
+  }
+
+  &__flight-number {
+    font-size: xx-large;
+    padding: 1rem 2rem;
+    min-width: 80px;
+  }
+
+  &__mission-name {
+    font-size: x-large;
+    padding: 1rem 2rem;
+    flex-grow: 1;
+  }
+
+  &__info {
+    justify-content: flex-end;
+    flex-direction: column;
+    text-align: right;
+    padding: 1rem;
+    align-content: space-between;
+
+    &__date {
+      font-size: small;
+    }
+
+    &__rocket {
+      font-weight: 900;
+      font-size: larger;
+    }
+  }
+}
