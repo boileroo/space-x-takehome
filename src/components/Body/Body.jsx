@@ -5,9 +5,11 @@ import { LaunchList } from "../LaunchList";
 import { Button } from "../Button";
 import { Select } from "../Select";
 import { useLaunchContext } from "../../contexts/LaunchContext";
+import { ErrorPage } from "../ErrorPage";
+import { LoadingPage } from "../LoadingPage";
 
 export const Body = () => {
-  const { data: launches, filter, setSort, sort } = useLaunchContext();
+  const { data: launches, isError, isLoading, filter, setSort, sort } = useLaunchContext();
   const [yearsRange, setYearsRange] = useState([]);
 
   useEffect(() => {
@@ -25,23 +27,30 @@ export const Body = () => {
           alt="Launch Home"
         />
       </div>
-      <div className="app__launches">
-        <div className="app__filters">
-          <Select
-            classes="select"
-            label={LABEL.FILTER_BY_YEAR}
-            testId="filter-button-test"
-            values={yearsRange}
-          />
-          <Button
-            filter={filter}
-            classes="button button--sort"
-            onClick={() => setSort(!sort)}
-            label={sort ? LABEL.ASC : LABEL.DESC}
-          />
+
+      {isError && <ErrorPage />}
+
+      {isLoading && <LoadingPage />}
+
+      {!isLoading && !isError && (
+        <div className="app__launches">
+          <div className="app__filters">
+            <Select
+              classes="select"
+              label={LABEL.FILTER_BY_YEAR}
+              testId="filter-button-test"
+              values={yearsRange}
+            />
+            <Button
+              filter={filter}
+              classes="button button--sort"
+              onClick={() => setSort(!sort)}
+              label={sort ? LABEL.ASC : LABEL.DESC}
+            />
+          </div>
+          <LaunchList launches={launches} filter={filter} sort={sort} />
         </div>
-        <LaunchList launches={launches} filter={filter} sort={sort} />
-      </div>
+      )}
     </div>
   );
 };
