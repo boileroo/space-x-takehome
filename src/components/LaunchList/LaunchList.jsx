@@ -10,7 +10,7 @@ export const LaunchList = () => {
 
   if (filter !== "") {
     filteredLaunches = filteredLaunches.filter((launch) => {
-      launch.launch_year === filter;
+      return launch.launch_year === filter;
     });
   }
 
@@ -27,7 +27,7 @@ export const LaunchList = () => {
     // TODO: replace keys 'index' with a known unique value
     <ul className="launch-list">
       {sortedLaunches.map((launch, index) => {
-        return <LaunchItem key={index} launch={launch} index={index} />;
+        return <LaunchItem key={index} launch={launch} />;
       })}
     </ul>
   );
