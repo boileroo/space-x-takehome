@@ -1,28 +1,39 @@
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import axios from "axios";
 
+const fetchDataReducer = (state, action) => {
+  switch (action.type) {
+    case "INITIALISE":
+      return { ...state, isLoading: true, isError: false };
+    case "SUCCESS":
+      return { ...state, isLoading: false, isError: false, data: action.payload };
+    case "FAILURE":
+      return { ...state, isLoading: false, isError: true };
+    default:
+      throw new Error();
+  }
+};
+
 export const useFetchData = (url) => {
-  const [data, setData] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [state, dispatch] = useReducer(fetchDataReducer, {
+    isLoading: false,
+    isError: false,
+    data: [],
+  });
 
   const invokeFetch = async () => {
-    setIsError(false);
-    setIsLoading(true);
+    dispatch({ type: "INITIALISE" });
     try {
-      console.log("Fetching data!");
       const response = await axios(url);
-      setData(response.data);
+      dispatch({ type: "SUCCESS", payload: response.data });
     } catch (error) {
-      setIsError(true);
-      console.error(error);
+      dispatch({ type: "FAILURE" });
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
     invokeFetch();
   }, []);
 
-  return [{ data, isLoading, isError }, invokeFetch];
+  return [state, invokeFetch];
 };
